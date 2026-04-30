@@ -13,7 +13,7 @@ export const create = async (req, res) => {
     await user.save()
 
     res.status(StatusCodes.CREATED).json({
-      sucess: true,
+      success: true,
       message: '',
       result: user,
     })

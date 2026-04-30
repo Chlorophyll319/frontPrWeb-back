@@ -32,7 +32,7 @@ app.use(cors())
 // ↓錯誤處理
 app.use((err, req, res, _next) => {
   res.status(StatusCodes.BAD_REQUEST).json({
-    sucess: false,
+    success: false,
     message: 'Json格式錯誤😱',
   })
 })
@@ -53,6 +53,6 @@ app.all(/.*/, (req, res) => {
 })
 
 // 監聽與啟動
-app.listen(4000, () => {
+app.listen(process.env.PORT || 4000, () => {
   console.log('伺服器啟動💪')
 })
