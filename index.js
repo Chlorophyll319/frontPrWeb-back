@@ -27,7 +27,7 @@ const app = express()
 app.use(express.json())
 
 // 使用 CORS 中介軟體（處理跨域請求）
-app.use(cors())
+app.use(cors({ origin: process.env.FRONTEND_URL }))
 
 // ↓錯誤處理
 app.use((err, req, res, _next) => {
