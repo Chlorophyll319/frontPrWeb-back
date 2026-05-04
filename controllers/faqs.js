@@ -1,4 +1,4 @@
-import Faqs from '../models/faqs.js'
+﻿import Faqs from '../models/faqs.js'
 import { StatusCodes } from 'http-status-codes'
 import validator from 'validator'
 
