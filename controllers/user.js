@@ -1,21 +1,24 @@
-import User from '../models/user.js'
+﻿import User from '../models/user.js'
 import { StatusCodes } from 'http-status-codes'
 import jwt from 'jsonwebtoken'
 
 export const create = async (req, res) => {
   try {
     const user = new User({
-      // 還沒寫完，要回來改
       username: req.body.username,
       password: req.body.password,
-      // 除了帳號跟密碼其他都沒存，但是我先跳過喔哈哈哈哈
+      role: req.body.role,
     })
     await user.save()
 
     res.status(StatusCodes.CREATED).json({
       success: true,
       message: '',
-      result: user,
+      result: {
+        _id: user._id,
+        username: user.username,
+        role: user.role,
+      },
     })
   } catch (err) {
     if (err.name === 'ValidationError') {
