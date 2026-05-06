@@ -24,10 +24,10 @@ mongoose
 
 // 建立 express 伺服器
 const app = express()
-app.use(express.json())
 
 // 使用 CORS 中介軟體（處理跨域請求）
 app.use(cors({ origin: process.env.FRONTEND_URL }))
+app.use(express.json())
 
 // 設置路由（根據不同檔案有不同的東西）
 app.use('/user', userRouter)
