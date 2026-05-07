@@ -75,7 +75,7 @@ export const get = async (req, res) => {
 export const update = async (req, res) => {
   try {
     if (!validator.isMongoId(req.params.id)) {
-      throw new Error('blogs ID')
+      throw new Error('BLOGS ID')
     }
 
     // Mongoose 方法：依 ID 更新並回傳
