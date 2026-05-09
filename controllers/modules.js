@@ -55,7 +55,7 @@ export const getAll = async (req, res) => {
 
 export const get = async (req, res) => {
   try {
-    const modules = await Modules.find({ visible: true })
+    const modules = await Modules.find({ visible: true }).sort({ sortOrder: 1 })
     res.status(StatusCodes.OK).json({
       success: true,
       message: 'projects列表取得成功',
