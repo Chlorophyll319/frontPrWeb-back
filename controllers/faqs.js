@@ -36,7 +36,7 @@ export const create = async (req, res) => {
 
 export const getAll = async (req, res) => {
   try {
-    const faqs = await Faqs.find()
+    const faqs = await Faqs.find().sort({ sortOrder: 1 })
     res.status(StatusCodes.OK).json({
       success: true,
       message: 'faq列表取得成功',
