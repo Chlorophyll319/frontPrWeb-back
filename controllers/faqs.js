@@ -1,4 +1,4 @@
-import Faqs from '../models/faqs.js'
+﻿import Faqs from '../models/faqs.js'
 import { StatusCodes } from 'http-status-codes'
 import validator from 'validator'
 
@@ -36,7 +36,7 @@ export const create = async (req, res) => {
 
 export const getAll = async (req, res) => {
   try {
-    const faqs = await Faqs.find()
+    const faqs = await Faqs.find().sort({ sortOrder: 1 })
     res.status(StatusCodes.OK).json({
       success: true,
       message: 'faq列表取得成功',
@@ -54,7 +54,7 @@ export const getAll = async (req, res) => {
 
 export const get = async (req, res) => {
   try {
-    const faqs = await Faqs.find({ visible: true })
+    const faqs = await Faqs.find({ visible: true }).sort({ sortOrder: 1 })
     res.status(StatusCodes.OK).json({
       success: true,
       message: 'faq列表取得成功',

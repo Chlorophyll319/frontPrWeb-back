@@ -24,18 +24,10 @@ mongoose
 
 // 建立 express 伺服器
 const app = express()
-app.use(express.json())
 
 // 使用 CORS 中介軟體（處理跨域請求）
-app.use(cors())
-
-// ↓錯誤處理
-app.use((err, req, res, _next) => {
-  res.status(StatusCodes.BAD_REQUEST).json({
-    sucess: false,
-    message: 'Json格式錯誤😱',
-  })
-})
+app.use(cors({ origin: process.env.FRONTEND_URL }))
+app.use(express.json())
 
 // 設置路由（根據不同檔案有不同的東西）
 app.use('/user', userRouter)
@@ -52,7 +44,21 @@ app.all(/.*/, (req, res) => {
   })
 })
 
+// ↓錯誤處理（必須在所有路由之後）
+app.use((err, req, res, _next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      success: false,
+      message: 'Json格式錯誤😱',
+    })
+  }
+  res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+    success: false,
+    message: '伺服器內部錯誤',
+  })
+})
+
 // 監聽與啟動
-app.listen(4000, () => {
+app.listen(process.env.PORT || 4000, () => {
   console.log('伺服器啟動💪')
 })

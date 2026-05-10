@@ -1,4 +1,4 @@
-import passport from 'passport'
+﻿import passport from 'passport'
 import { StatusCodes } from 'http-status-codes'
 import jwt from 'jsonwebtoken'
 
@@ -29,8 +29,6 @@ export const login = (req, res, next) => {
 
 export const token = (req, res, next) => {
   passport.authenticate('jwt', { session: false }, (error, data, info) => {
-    console.log('passport.js token')
-    console.log(error, data, info)
     if (!data || error) {
       // 是不是 JWT 錯誤，可能是過期、格式錯誤、SECRET 錯誤等
       if (info instanceof jwt.JsonWebTokenError) {

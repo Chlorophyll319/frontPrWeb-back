@@ -1,4 +1,4 @@
-import Blogs from '../models/blogs.js'
+﻿import Blogs from '../models/blogs.js'
 import { StatusCodes } from 'http-status-codes'
 import validator from 'validator'
 
@@ -56,14 +56,28 @@ export const getAll = async (req, res) => {
 
 export const get = async (req, res) => {
   try {
-    const blogs = await Blogs.find({ visible: true })
+    const tag = req.query.tag || ''
+    const page = Math.max(1, parseInt(req.query.page) || 1)
+    const limit = Math.min(50, Math.max(1, parseInt(req.query.limit) || 10))
+
+    const filter = { visible: true, ...(tag ? { tags: tag } : {}) }
+    const total = await Blogs.countDocuments(filter)
+    const totalPages = Math.ceil(total / limit)
+    const blogs = await Blogs.find(filter)
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit)
+
     res.status(StatusCodes.OK).json({
       success: true,
       message: 'blogs列表取得成功',
       blogs,
+      total,
+      page,
+      totalPages,
     })
   } catch (error) {
-    console.log('controllers/blogs.js getAll')
+    console.log('controllers/blogs.js get')
     console.error(error)
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       success: false,
@@ -75,7 +89,7 @@ export const get = async (req, res) => {
 export const update = async (req, res) => {
   try {
     if (!validator.isMongoId(req.params.id)) {
-      throw new Error('blogs ID')
+      throw new Error('BLOGS ID')
     }
 
     // Mongoose 方法：依 ID 更新並回傳

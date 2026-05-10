@@ -1,4 +1,4 @@
-import Modules from '../models/modules.js'
+﻿import Modules from '../models/modules.js'
 import { StatusCodes } from 'http-status-codes'
 import validator from 'validator'
 
@@ -37,7 +37,7 @@ export const create = async (req, res) => {
 
 export const getAll = async (req, res) => {
   try {
-    const modules = await Modules.find()
+    const modules = await Modules.find().sort({ sortOrder: 1 })
     res.status(StatusCodes.OK).json({
       success: true,
       message: 'projects列表取得成功',
@@ -55,7 +55,7 @@ export const getAll = async (req, res) => {
 
 export const get = async (req, res) => {
   try {
-    const modules = await Modules.find({ visible: true })
+    const modules = await Modules.find({ visible: true }).sort({ sortOrder: 1 })
     res.status(StatusCodes.OK).json({
       success: true,
       message: 'projects列表取得成功',
@@ -74,7 +74,7 @@ export const get = async (req, res) => {
 export const update = async (req, res) => {
   try {
     if (!validator.isMongoId(req.params.id)) {
-      throw new Error('projects ID')
+      throw new Error('MODULES ID')
     }
 
     // Mongoose 方法：依 ID 更新並回傳

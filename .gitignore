@@ -4,3 +4,4 @@ dump/*
 !dump/.gitkeep
 .claude
 .mcp.json
+seed.js

@@ -1,4 +1,4 @@
-import Projects from '../models/projects.js'
+﻿import Projects from '../models/projects.js'
 import { StatusCodes } from 'http-status-codes'
 import validator from 'validator'
 
@@ -38,7 +38,7 @@ export const create = async (req, res) => {
 
 export const getAll = async (req, res) => {
   try {
-    const projects = await Projects.find()
+    const projects = await Projects.find().sort({ sortOrder: 1 })
     res.status(StatusCodes.OK).json({
       success: true,
       message: 'projects列表取得成功',
@@ -56,7 +56,7 @@ export const getAll = async (req, res) => {
 
 export const get = async (req, res) => {
   try {
-    const projects = await Projects.find({ visible: true })
+    const projects = await Projects.find({ visible: true }).sort({ sortOrder: 1 })
     res.status(StatusCodes.OK).json({
       success: true,
       message: 'projects列表取得成功',
